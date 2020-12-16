@@ -27,6 +27,18 @@ describe('App', () => {
     getAllReservation.mockResolvedValue([]);
     render(<App />
       )
-    const submitButton = screen.getByText
+    const submitButton = screen.getByText('Make Reservation');
+    userEvent.type(screen.getByPlaceholderText("Name"), "Sally");
+    userEvent.type(screen.getByPlaceholderText("Date (mm/dd)"), "10/31");
+    userEvent.type(screen.getByPlaceholderText("Time"), "6:00");
+    userEvent.type(screen.getByPlaceholderText("Number of guests"), "6");
+    userEvent.click(submitButton);
+    
+    const cancelButton = screen.getByText("Cancel");
+    const foundReservation = screen.getByText('Sally');
+
+    userEvent.click(cancelButton)
+    expect(foundReservation).not.toBeInTheDocument();
+
   })
 })
