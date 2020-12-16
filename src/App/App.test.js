@@ -1,6 +1,6 @@
 import React from 'react';
 import App from './App';
-import { screen, render } from "@testing-library/react";
+import { screen, render, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 jest.mock("../apiCall");
@@ -39,6 +39,19 @@ describe('App', () => {
 
     userEvent.click(cancelButton)
     expect(foundReservation).not.toBeInTheDocument();
+  }),
 
+  it('should render all reservations', async () => {
+    getAllReservation.mockResolvedValue([
+      {id: 23, name: 'Joey', date: '2/24', time: '3:00', number: '8'},
+      {id: 34, name: 'Jeff', date: '5/7', time: '4:45', number: 3}
+    ])
+
+    render(<App />)
+    const mockReservationOne = await waitFor(() => screen.getByText('Jeff'))
+    const mockReservationTwo = await waitFor(() => screen.getByText('3:00 pm'))
+
+    expect(mockReservationOne).toBeInTheDocument();
+    expect(mockReservationTwo).toBeInTheDocument();
   })
 })
