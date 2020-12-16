@@ -9,7 +9,7 @@ const Card = ({ id, name, date, time, number, cancelReservation }) => {
       <p>{date}</p>
       <p>{time} pm</p>
       <p>Number of guests: {number}</p>
-      <button onClick={() => cancelReservation(id)}>Cancel</button>
+      <button className="cancel-button" onClick={() => cancelReservation(id)}>Cancel</button>
     </div>
   );
 };
