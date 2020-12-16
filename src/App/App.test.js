@@ -1,9 +1,32 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App';
+import { screen, render } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import "@testing-library/jest-dom";
+jest.mock("../apiCall");
+import { getAllReservation } from '../apiCall'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+
+describe('App', () => {
+  it('should accept new reservations', () => {
+    getAllReservation.mockResolvedValue([])
+    render(<App />)
+
+    const submitButton = screen.getByText("Make Reservation");
+    userEvent.type(screen.getByPlaceholderText("Name"), "Micah");
+    userEvent.type(screen.getByPlaceholderText("Date (mm/dd)"), "02/21");
+    userEvent.type(screen.getByPlaceholderText("Time"), "4:15");
+    userEvent.type(screen.getByPlaceholderText("Number of guests"), "3");
+    userEvent.click(submitButton);
+    
+    expect(screen.getByText('Micah')).toBeInTheDocument()
+
+  }),
+
+  it('shoulf remove a card when cancel is clicked', () => {
+    getAllReservation.mockResolvedValue([]);
+    render(<App />
+      )
+    const submitButton = screen.getByText
+  })
+})
