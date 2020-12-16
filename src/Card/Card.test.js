@@ -23,7 +23,7 @@ describe("Card", () => {
     expect(screen.getByText("Number of guests: 4")).toBeInTheDocument();
     expect(screen.getByText("Cancel")).toBeInTheDocument();
   }),
-  
+
   it("should call cancel reservation with the correct id", () => {
     const mockCancelReservation = jest.fn();
 
@@ -43,5 +43,5 @@ describe("Card", () => {
     userEvent.click(cancelButton);
 
     expect(mockCancelReservation).toHaveBeenCalledWith(3);
-  });
+  })
 });
