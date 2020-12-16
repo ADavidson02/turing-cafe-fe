@@ -1,7 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
+import Container from '../Container/Container';
+import { getAllReservation } from '../apiCall';
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state={
+      reservations: [],
+    }
+  }
+
+  componentDidMount = async () => {
+    const allReservations = await getAllReservation()
+    this.setState({reservations: allReservations})
+    console.log(allReservations);
+  }
+
+
   render() {
     return (
       <div className="App">
@@ -10,6 +26,7 @@ class App extends Component {
 
         </div>
         <div className='resy-container'>
+          <Container reservations={this.state.reservations}/>
           
         </div>
       </div>
