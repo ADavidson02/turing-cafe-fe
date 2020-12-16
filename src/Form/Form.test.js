@@ -28,20 +28,34 @@ describe("Form", () => {
     };
     expect(mockAddReservation).toHaveBeenCalledWith(expectedReservation);
   }),
-  
-    it("form inputs should clear after Make Reservation has been clicked", () => {
-      render(<Form addReservation={jest.fn} />);
 
-      const submitButton = screen.getByText("Make Reservation");
-      userEvent.type(screen.getByPlaceholderText("Name"), "James");
-      userEvent.type(screen.getByPlaceholderText("Date (mm/dd)"), "04/22");
-      userEvent.type(screen.getByPlaceholderText("Time"), "4:00");
-      userEvent.type(screen.getByPlaceholderText("Number of guests"), "2");
-      userEvent.click(submitButton);
+  it("form inputs should clear after Make Reservation has been clicked", () => {
+    render(<Form addReservation={jest.fn} />);
 
-      expect(screen.getByPlaceholderText("Name").value).toEqual("");
-      expect(screen.getByPlaceholderText("Date (mm/dd)").value).toEqual("");
-      expect(screen.getByPlaceholderText("Time").value).toEqual("");
-      expect(screen.getByPlaceholderText("Number of guests").value).toEqual("");
-    });
+    const submitButton = screen.getByText("Make Reservation");
+    userEvent.type(screen.getByPlaceholderText("Name"), "James");
+    userEvent.type(screen.getByPlaceholderText("Date (mm/dd)"), "04/22");
+    userEvent.type(screen.getByPlaceholderText("Time"), "4:00");
+    userEvent.type(screen.getByPlaceholderText("Number of guests"), "2");
+    userEvent.click(submitButton);
+
+    expect(screen.getByPlaceholderText("Name").value).toEqual("");
+    expect(screen.getByPlaceholderText("Date (mm/dd)").value).toEqual("");
+    expect(screen.getByPlaceholderText("Time").value).toEqual("");
+    expect(screen.getByPlaceholderText("Number of guests").value).toEqual("");
+  }),
+
+  it("what is typed into the form should reflect in the form input", () => {
+    render(<Form addReservation={jest.fn()}/>)
+
+    userEvent.type(screen.getByPlaceholderText("Name"), "Ally");
+    userEvent.type(screen.getByPlaceholderText("Date (mm/dd)"), "06/21");
+    userEvent.type(screen.getByPlaceholderText("Time"), "1:00");
+    userEvent.type(screen.getByPlaceholderText("Number of guests"), "3");
+
+    expect(screen.getByPlaceholderText('Name').value).toEqual("Ally")
+    expect(screen.getByPlaceholderText("Date (mm/dd)").value).toEqual("06/21");
+    expect(screen.getByPlaceholderText("Time").value).toEqual("1:00");
+    expect(screen.getByPlaceholderText("Number of guests").value).toEqual("3");
+  })
 });
